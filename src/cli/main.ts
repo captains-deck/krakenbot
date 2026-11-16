@@ -18,6 +18,7 @@ import {
   requiredPositional,
   requiredString,
 } from "./args.js";
+import { runDemoCli } from "./demo.js";
 import { helpText } from "./help.js";
 
 const wantsJson = process.argv.includes("--json");
@@ -243,6 +244,42 @@ async function main(): Promise<void> {
       ),
     });
     write(attached, formatAgent(attached));
+    return;
+  }
+  if (group === "demo" && (action === "plan" || action === "publish")) {
+    const forwarded = process.argv.slice(4).filter((item, index, all) => {
+      if (item === "--json" || item === "--help") return false;
+      if (item === "--registry" || all[index - 1] === "--registry")
+        return false;
+      return true;
+    });
+    if (json) forwarded.push("--json");
+    process.stdout.write(runDemoCli([action, ...forwarded]));
+    return;
+  }
+  if (group === "model") {
+    const { runModelCommand } = await import("../../runtime/modelCommand.mjs");
+    let result: { ok: boolean; body: unknown; text: string };
+    try {
+      result = await runModelCommand({
+        action,
+        rest,
+        flags: parsed.flags,
+        cwd: process.cwd(),
+      });
+    } catch (error) {
+      const code =
+        error instanceof Error &&
+        "code" in error &&
+        typeof error.code === "string"
+          ? error.code
+          : "DEPLOYMENT_FAILED";
+      const message =
+        error instanceof Error ? error.message : "The model command failed.";
+      throw new KrakenError(code, message);
+    }
+    write(result.body, result.text);
+    if (!result.ok) process.exitCode = 1;
     return;
   }
   if (group === "context" && action === "export") {

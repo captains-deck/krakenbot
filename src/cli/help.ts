@@ -11,7 +11,15 @@ Usage:
   kraken agent define <name> --volt <agentvolt> --instructions <path>
   kraken agent attach <name> --context <volt> --include <pattern> --access <read|read-write>
   kraken context export <agent> --output <path>
+  kraken model deploy <volt> --account <id> --environment <id>
+  kraken model status <volt>
+  kraken model stop <volt>
+  kraken model restart <volt>
+  kraken model validate <volt>
+  kraken model export <volt> --output <directory>
   kraken ui
+  kraken demo plan --space <aicaptain|sampha|shoretrades> --project <id> --business <name> --account-email <email> [--business-url <slug>] [--email <email>]
+  kraken demo publish --space <aicaptain|sampha|shoretrades> --project <id> --business <name> --account-email <email> [--email <email>] [--execute]
 
 Profiles are one WormVolt resource, not three products:
   basic  General knowledge and working context
@@ -66,6 +74,23 @@ Prompt revision history is not Git history. These commands require a DevVolt.
 
 Neither command launches an agent or calls a model provider.
 `,
+  model: `kraken model
+
+  deploy <volt> --account <id> --environment <id> [--spec <file>] [--release-root <path>] [--llama-server <path>] [--cache <path>]
+      Verify the pinned release and start it on loopback through the local runner.
+  status <volt> [--deployment <id>]
+      Show local state and Relay availability without printing credentials.
+  stop <volt> [--deployment <id>]
+      Stop the recorded processes and revoke the runner credential.
+  restart <volt> [--deployment <id>]
+      Stop and start the recorded deployment without changing its account.
+  validate <volt> [--spec <file>] [--release-root <path>]
+      Check the volt, specification and canonical release. Nothing is started.
+  export <volt> --output <directory>
+      Copy shareable metadata. Local state, weights and credentials are omitted.
+
+Set RELAY_INFERENCE_URL and RELAY_SERVICE_TOKEN in the environment. Do not pass the token as a flag.
+`,
   context: `kraken context
 
   export <agent> --output <path>
@@ -76,6 +101,19 @@ Neither command launches an agent or calls a model provider.
       The output file is not overwritten.
 
 Exported instructions do not enforce restrictions on an external assistant after handoff.
+`,
+  demo: `kraken demo
+
+  plan --space <aicaptain|sampha|shoretrades> --project <id> --business <name> --account-email <email> [--business-url <slug>] [--email <email>]
+      Show the web-build demo address, Better Auth allowlist and showroom for a saved website.
+      Studio admins and the account email are always included. Repeat --email for extra people.
+      This does not deploy.
+  publish --space <id> --project <id> --business <name> --account-email <email> [--email <email>] [--execute]
+      Record the same plan under .kraken/demo-runs.jsonl.
+      --execute asks the studio at DEMO_PUBLISH_URL to publish the saved preview.
+      DEMO_PUBLISH_TOKEN must match that studio. The command does not put the site behind Cloudflare Access.
+
+Web-build demos are signed in with Better Auth on their own hostname.
 `,
   ui: `kraken ui
 

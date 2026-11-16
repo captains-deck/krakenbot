@@ -153,6 +153,7 @@ ordinary Markdown. A link in a note does not grant access to its target.
   that omits files outside the include pattern.
 - WormVolt permission checks for read, share and, when requested, write.
 - Tests against temporary vaults.
+- `kraken model` for a pinned local release. See [docs/model-deployment.md](docs/model-deployment.md).
 
 The local operator is the trusted principal `kraken-operator` in the `owner`
 group. Group names in `volt.json` do not authenticate anyone. That matches
@@ -160,9 +161,10 @@ WormVolt's host-supplied principal.
 
 ## Deferred
 
-Live provider execution, autonomous worm sync, multi-agent scheduling, remote
-connectors, cloud hosting, release orchestration, Git integration, and moving a
-vault without editing its absolute paths. Command Chest, Captain's Deck and Helm
+Cloud model hosting, autonomous worm sync, multi-agent scheduling, remote
+development-agent execution, Git integration, and moving a vault without
+editing its absolute paths. Local Sentient Potato deployment is a separate
+command; see [docs/model-deployment.md](docs/model-deployment.md). Command Chest, Captain's Deck and Helm
 are not separate runtimes here. A future provider adapter can sit beside the
 manual handoff renderer and call the same services. It should not invent a
 second policy engine.

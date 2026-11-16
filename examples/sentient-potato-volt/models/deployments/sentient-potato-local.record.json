@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "deploymentId": "sentient-potato-local",
+  "modelId": "sentient-potato",
+  "releaseVersion": "0.1.0-rc.1",
+  "artifactSha256": "889ea3b9143cdc32146c7d530ce5f3d452ec18069086f6f4167ce9ae72a9691f",
+  "provenance": {
+    "source": "model-manifest",
+    "path": "releases/sentient-potato/0.1.0-rc.1/release.json",
+    "license": "Apache-2.0"
+  },
+  "profileChecksum": "e16697d86da2d7f4f728bd63437cff063c5bd194035b07f9fef2311fb711a454",
+  "runtime": {
+    "engine": "llama.cpp",
+    "contextTokens": 4096,
+    "testedVersion": "llama.cpp 0.9.0-dev, build 1, commit 6c01da627 (Ollama 0.40.16 standalone binary)"
+  },
+  "executionHostId": "mac-local",
+  "executionHostKind": "local-machine",
+  "hostingMode": "local-execution",
+  "management": "captain-managed",
+  "portal": "hosted-captains-deck",
+  "arrangement": "hybrid",
+  "ownership": {
+    "accountId": "fVVdr6L3gFbDpf495aVho9zWkncPMXSY",
+    "environmentId": "aicaptain:fVVdr6L3gFbDpf495aVho9zWkncPMXSY",
+    "voltId": "captain-local",
+    "resolvedAt": "2026-11-15T22:46:54.733Z"
+  },
+  "relay": {
+    "contract": "relay-inference/1"
+  },
+  "limits": {
+    "maxInputCharacters": 1000,
+    "deadlineSeconds": 60,
+    "maxInFlight": 1
+  },
+  "health": {
+    "readyTimeoutSeconds": 90
+  },
+  "lifecycle": {
+    "reuseRunningProcess": true,
+    "stopSignal": "SIGTERM"
+  },
+  "secretRefs": {
+    "runnerCredential": "secret://aicaptain/kraken-runners/sentient-potato-local",
+    "relayServiceCredential": "env:RELAY_SERVICE_TOKEN"
+  },
+  "resolvedAt": "2026-11-15T22:46:54.733Z"
+}

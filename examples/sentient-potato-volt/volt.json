@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "captain-local",
+  "name": "Captain local models",
+  "purpose": "Deployment records for a Captain-managed local model. Weights and credentials are not stored here.",
+  "knowledge": { "location": "knowledge", "format": "markdown-json-v1" },
+  "structure": {
+    "template": "captains-scratch",
+    "allowedFields": ["title", "summary", "notes"],
+    "requiredFields": ["title", "summary"]
+  },
+  "audience": "private",
+  "securityGroups": ["owner", "member"],
+  "policy": {
+    "read": ["owner", "member"],
+    "transform": [],
+    "write": ["owner"],
+    "share": ["owner"],
+    "publish": []
+  },
+  "autonomy": { "mode": "manual", "actions": ["read", "write", "share"] },
+  "connections": []
+}

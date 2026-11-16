@@ -22,6 +22,12 @@ export const MODULES = [
   { id: "worm", title: "Worm working memory", summary: "Working memory, worm-in and worm-out. Creating the folders does not crawl, propagate or share anything.", files: ["worm/workingMemory.md", "worm/worm-in/README.md", "worm/worm-out/README.md"], requires: [] },
   { id: "assets", title: "Asset index", summary: "A list of the files in this volt and room to add later assets.", files: ["worm/Asset Index.md"], requires: [] },
   { id: "command-chest", title: "Command Chest and Foundations Dev Prompt", summary: "An editable first development handoff. The revision in the file is the one a later build would use.", files: ["Command Chest/Foundations Dev Prompt.md"], requires: [] },
+  { id: "adr", title: "Architecture decisions", summary: "A reviewable decision record. It does not replace an existing note during an upgrade.", files: ["Decisions/ADR.md"], requires: [] },
+  { id: "repository", title: "Repository reference", summary: "A pointer to a repository. It does not clone or grant access.", files: ["Repositories/Repository.md"], requires: [] },
+  { id: "model-manifest", title: "Model Manifest reference", summary: "A citation of a Model Manifest release. The manifest service remains the registry.", files: ["Models/Model Manifest.md"], requires: [] },
+  { id: "stack", title: "Stack version", summary: "The stack identity this volt claims to use, marked declared until a test cites it.", files: ["Stacks/Stack.md"], requires: [] },
+  { id: "manifest", title: "Runtime manifest", summary: "Runtime requirements and licence notes. Declared support is not tested support.", files: ["Manifests/Manifest.md"], requires: [] },
+  { id: "handoff", title: "Handoff", summary: "What the next person needs. Creating it does not start an agent.", files: ["Handoff/Handoff.md"], requires: [] },
 ];
 
 export const DEVELOPMENT_MODULES = MODULES.map((module) => module.id).filter((id) => id !== "integrations");
@@ -452,8 +458,8 @@ function voltJson(meta) {
       requiredFields: ["title", "summary"],
     },
     audience: "private",
-    securityGroups: ["owner"],
-    policy: { read: ["owner"], transform: [], write: ["owner"], share: ["owner"], publish: [] },
+    securityGroups: ["owner", "member"],
+    policy: { read: ["owner", "member"], transform: [], write: ["owner"], share: ["owner"], publish: [] },
     autonomy: { mode: "manual", actions: ["read", "write", "share"] },
     connections: [],
   };
@@ -495,6 +501,12 @@ const BODIES = {
   "worm/worm-in/README.md": () => wormIn(),
   "worm/worm-out/README.md": () => wormOut(),
   "Command Chest/Foundations Dev Prompt.md": foundations,
+  "Decisions/ADR.md": () => "# ADR\n\nStatus: proposed.\n\nRecord the decision here. An upgrade of this template does not replace a note that already exists.\n",
+  "Repositories/Repository.md": () => "# Repository\n\nRemote: unset.\n\nThis is a reference. It does not clone the repository or grant access to it.\n",
+  "Models/Model Manifest.md": () => "# Model Manifest\n\nmodelId: unset\nrelease: unset\nsupport: declared\nevidence: none\n\nModel Manifest remains the registry. This note cites a release; it does not copy one.\n",
+  "Stacks/Stack.md": () => "# Stack\n\nstackId: unset\nversion: unset\nsupport: declared\n\nDeclared support is not tested support. Add the exact version and evidence before changing this claim.\n",
+  "Manifests/Manifest.md": () => "# Manifest\n\nRuntime requirements, licences and deployment artefacts belong here as references. A compatibility claim needs an exact version and evidence.\n",
+  "Handoff/Handoff.md": () => "# Handoff\n\nWrite what the next person needs. Creating this file does not start an agent.\n",
 };
 
 export function buildPlan(input) {
